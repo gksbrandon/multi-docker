@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t gksbrandon/react-test -f ./client/Dockerfile.dev ./client
+
+scripts:
+  - docker run gksbrandon/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t gksbrandon/multi-client ./client
+  - docker build -t gksbrandon/multi-nginx ./nginx
+  - docker build -t gksbrandon/multi-server ./server
+  - docker build -t gksbrandon/multi-worker ./worker
