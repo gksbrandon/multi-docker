@@ -5,7 +5,7 @@ services:
 before_install:
   - docker build -t gksbrandon/react-test -f ./client/Dockerfile.dev ./client
 
-scripts:
+script:
   - docker run gksbrandon/react-test npm test -- --coverage
 
 after_success:
@@ -13,7 +13,7 @@ after_success:
   - docker build -t gksbrandon/multi-nginx ./nginx
   - docker build -t gksbrandon/multi-server ./server
   - docker build -t gksbrandon/multi-worker ./worker
-  # Log in to docker CLI
+  # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
   - docker push gksbrandon/multi-client
